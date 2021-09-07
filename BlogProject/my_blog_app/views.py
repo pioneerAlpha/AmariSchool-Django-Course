@@ -4,13 +4,15 @@ from django.http import HttpResponse
 
 
 def home(request):
-    return render(request,'index.html')
+    data=Blog.objects.all()
+    return render(request,'index.html',{'blogs':data})
 
 def about_us(request):
     return render(request,'about_us.html')
 
 def single_post(request,pk):
-    return render(request,'post.html')
+    singleBlog=Blog.objects.get(pk=pk)
+    return render(request,'post.html',{'singleBlog':singleBlog})
 
 def contact(request):
     return render(request,'contact.html')
