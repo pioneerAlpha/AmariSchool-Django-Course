@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
-
+{%load convert_utc_to_local%}
 {% block content %}
-
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('{{s}}img/post-bg.jpg')">
+        <header class="masthead" style="background-image: url('{{singleBlog.banner.url}}')">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
@@ -21,7 +20,7 @@
                             <span class="meta">
                                 Posted by
                                 <a href="#!">Start Bootstrap</a>
-                                on {{singleBlog.posted_at}}
+                                on {{singleBlog.posted_at|convert_to_localtime}}
                             </span>
                         </div>
                     </div>

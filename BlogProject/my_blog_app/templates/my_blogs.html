@@ -1,18 +1,32 @@
 {%extends 'base.html'%} {%block content%} {%load convert_utc_to_local%}
+<style>
+	.edit-btn {
+		background: #1877f2;
+	}
+	.delete-btn {
+		background: #cd201f;
+		border-color: #cd201f;
+	}
+	.delete-btn:hover {
+		background: #bd081c;
+	}
+	.edit-div{
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+	.d-form{
+		margin-left: 30px;
+	}
+</style>
 <!-- Page Header-->
 <header class="masthead" style="background-image: url('{{s}}img/home-bg.jpg')">
 	<div class="container position-relative px-4 px-lg-5">
 		<div class="row gx-4 gx-lg-5 justify-content-center">
 			<div class="col-md-10 col-lg-8 col-xl-7">
 				<div class="site-heading">
-					<h1 class="d-flex-center">
-					<p>Amari</p>
-					<p class="blog-title">Blog</p>
-					</h1>
-					<span class="subheading"
-						>Spread your inner potential and outshine your enthusiasm with your
-						creative write-ups.</span
-					>
+					<h1>My Blogs</h1>
+					<span class="subheading">We love Django</span>
 				</div>
 			</div>
 		</div>
@@ -37,12 +51,24 @@
 					</h3>
 				</a>
 				<p class="post-meta">
-					Posted by {% if blog.author is not None%}
-					<a href="#">{{blog.author}}</a>
-					{% else %}
-					<a href="#">Anonymous</a>
-					{% endif %} on {{blog.posted_at|convert_to_localtime}}
+					Posted on {{blog.posted_at|convert_to_localtime}}
 				</p>
+			</div>
+			<div class="edit-div">
+					<a href="{%url 'update_post' id=blog.id%}">
+					<button class="btn btn-primary text-uppercase edit-btn" type="submit">
+						Edit
+					</button>
+					</a>
+				<form method="post" action="{%url 'delete_post' id=blog.id%}" class="d-form">
+					{% csrf_token %}
+					<button
+						class="btn btn-primary text-uppercase delete-btn"
+						type="submit"
+					>
+						Delete
+					</button>
+				</form>
 			</div>
 			<!-- Divider-->
 			<hr class="my-4" />

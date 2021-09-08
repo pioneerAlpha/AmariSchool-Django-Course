@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'my_blog_app.apps.MyBlogAppConfig',
+    'django_markup',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +66,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{
+                'convert_utc_to_local':'my_blog_app.templatetags.convert_utc_to_local',
+                'convert_to_html':'my_blog_app.templatetags.convert_to_html'
+            }
         },
     },
 ]
@@ -127,6 +132,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'staticfiles')]
 STATIC_ROOT=os.path.join(BASE_DIR,'Assets')
 
+MEDIA_URL = '/Data/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'Data')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
