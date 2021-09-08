@@ -3,7 +3,9 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-
+# cleanup_old_files
+from django.apps import apps
+apps.get_models()
 
 def home(request):
     data=Blog.objects.all()
@@ -95,8 +97,7 @@ def update_post(request,id):
         else:
             messages.error(request,"You are not allowed to update this blog.")
             return redirect(request.META['HTTP_REFERER'])
-    except Exception as e:
-        messages.error(request,"Blog doesn't exists.")
+    except:
         return redirect('my_blogs')
 
 def delete_post(request,id):
@@ -104,8 +105,8 @@ def delete_post(request,id):
         single_blog=Blog.objects.get(pk=id)
         if request.user.email==single_blog.author_email:
             if request.method=="POST":
-                messages.success(request,'Blog is deleted successfully.')
                 single_blog.delete()
+                messages.success(request,'Blog is deleted successfully.')
                 return redirect('my_blogs')
         else:
             messages.error(request,"You are not allowed to update this blog.")

@@ -1,4 +1,5 @@
-{% extends 'base.html' %} {% block content %} {% load markup_tags %}
+{% extends 'base.html' %} {% block content %} 
+{% load markup_tags %}
 
 <style>
 	.form-floating {
@@ -147,7 +148,7 @@
 		selector: "#subtitle",
 		setup: function (editor) {
 			editor.on("init", function (e) {
-				editor.setContent("{{ blog.sub_title|apply_markup:"markdown" }}");
+				editor.setContent(`{{ blog.sub_title|apply_markup:"markdown" }}`);
 			});
 		},
 		width: 600,

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'my_blog_app.apps.MyBlogAppConfig',
     'django_markup',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [

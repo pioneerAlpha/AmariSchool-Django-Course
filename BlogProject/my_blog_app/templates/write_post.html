@@ -1,119 +1,130 @@
 {% extends 'base.html' %} {% block content %}
-<script src="https://cdn.tiny.cloud/1/yql43ipvzt6i5p1iyouzzmj66li7lob3eaw1h7d1n1fhoyal/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script
+	src="https://cdn.tiny.cloud/1/yql43ipvzt6i5p1iyouzzmj66li7lob3eaw1h7d1n1fhoyal/tinymce/5/tinymce.min.js"
+	referrerpolicy="origin"
+></script>
 <script>
-   tinymce.init({
-        selector: 'textarea',
-        width: 600,
-        height: 300,
-        plugins: [
-            'advlist autolink link image lists charmap print preview hr anchor pagebreak',
-            'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-            'table emoticons template paste help'
-        ],
-        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
-            'bullist numlist outdent indent | link image | print preview media fullpage | ' +
-            'forecolor backcolor emoticons | help',
-        menu: {
-            favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
-        },
-        menubar: 'favs file edit view insert format tools table help',
-    });
-  </script>
+	tinymce.init({
+		selector: "textarea",
+		width: 600,
+		height: 300,
+		plugins: [
+			"advlist autolink link image lists charmap print preview hr anchor pagebreak",
+			"searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+			"table emoticons template paste help",
+		],
+		toolbar:
+			"undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | " +
+			"bullist numlist outdent indent | link image | print preview media fullpage | " +
+			"forecolor backcolor emoticons | help",
+		menu: {
+			favs: {
+				title: "My Favorites",
+				items: "code visualaid | searchreplace | emoticons",
+			},
+		},
+		menubar: "favs file edit view insert format tools table help",
+	});
+</script>
 
-  <style>
-  .form-floating {
-    margin-top: 30px;
-  }
-  </style>
+<style>
+	.form-floating {
+		margin-top: 30px;
+	}
+</style>
 <!-- Page Header-->
 <header
-  class="masthead"
-  style="background-image: url('{{s}}img/contact-bg.jpg')"
+	class="masthead"
+	style="background-image: url('{{s}}img/contact-bg.jpg')"
 >
-  <div class="container position-relative px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-7">
-        <div class="page-heading">
-          <h1>Write Post</h1>
-          <span class="subheading">Write your own thoughts.</span>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="container position-relative px-4 px-lg-5">
+		<div class="row gx-4 gx-lg-5 justify-content-center">
+			<div class="col-md-10 col-lg-8 col-xl-7">
+				<div class="page-heading">
+					<h1>Write Post</h1>
+					<span class="subheading">Write your own thoughts.</span>
+				</div>
+			</div>
+		</div>
+	</div>
 </header>
 <!-- Main Content-->
 <main class="mb-4">
-  <div class="container px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-7">
-        <p>Write your own blog here -</p>
-        <div class="my-5">
-          <form id="contactForm" method="POST" entype="multipart/formdata">
-          {%csrf_token%}
-            <div class="form-floating">
-              <input
-                class="form-control"
-                id="name"
-                name="title"
-                type="text"
-                placeholder="Blog title"
-                data-sb-validations="required"
-              />
-              <label for="name">Blog Title</label>
-              <div class="invalid-feedback" data-sb-feedback="name:required">
-                A name is required.
-              </div>
-            </div>
-            <div class="form-floating">
-            <h4>Blog Subtitle</h4>
-              <textarea
-                class="form-control"
-                id="subtitle"
-                name="subtitle"
-                style="height: 12rem"
-                data-sb-validations="required"
-              ></textarea>
-              <div class="invalid-feedback" data-sb-feedback="message:required">
-                A message is required.
-              </div>
-            </div>
+	<div class="container px-4 px-lg-5">
+		<div class="row gx-4 gx-lg-5 justify-content-center">
+			<div class="col-md-10 col-lg-8 col-xl-7">
+				<p>Write your own blog here -</p>
+				<div class="my-5">
+					<form method="POST" enctype="multipart/form-data">
+						{%csrf_token%}
+						<div class="form-floating">
+							<input
+								class="form-control"
+								id="name"
+								name="title"
+								type="text"
+								placeholder="Blog title"
+								data-sb-validations="required"
+							/>
+							<label for="name">Blog Title</label>
+							<div class="invalid-feedback" data-sb-feedback="name:required">
+								A name is required.
+							</div>
+						</div>
+						<div class="form-floating">
+							<h4>Blog Subtitle</h4>
+							<textarea
+								class="form-control"
+								id="subtitle"
+								name="subtitle"
+								style="height: 12rem"
+								data-sb-validations="required"
+							></textarea>
+							<div class="invalid-feedback" data-sb-feedback="message:required">
+								A message is required.
+							</div>
+						</div>
 
-            <div class="form-floating">
-            <h4>Banner Image</h4>
-            <input class="form-control"name="bannerImg" type="file" id="formFile" />
-            </div>
+						<div class="form-floating">
+							<h4>Banner Image</h4>
+							<input
+								class="form-control"
+								name="banner_image"
+								type="file"
+								accept="image/*"
+								id="formFile"
+							/>
+						</div>
 
-            <div class="form-floating">
-            <h4>Your Blog</h4>
-              <textarea
-                class="form-control"
-                id="blog"
-                name="blog"
-                style="height: 12rem"
-                data-sb-validations="required"
-              ></textarea>
-              <div class="invalid-feedback" data-sb-feedback="blog:required">
-                A blog is required.
-              </div>
-            </div>
-            <br />
-           
-            <!-- Submit Button-->
-            <div style="text-align: center;">
-              <button
-              class="btn btn-primary text-uppercase"
-              id="submitButton"
-              type="submit"
-            >
-              Post Blog
-            </button>
-            
-            </div>
-          
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+						<div class="form-floating">
+							<h4>Your Blog</h4>
+							<textarea
+								class="form-control"
+								id="blog"
+								name="blog"
+								style="height: 12rem"
+								data-sb-validations="required"
+							></textarea>
+							<div class="invalid-feedback" data-sb-feedback="blog:required">
+								A blog is required.
+							</div>
+						</div>
+						<br />
+
+						<!-- Submit Button-->
+						<div style="text-align: center">
+							<button
+								class="btn btn-primary text-uppercase"
+								id="submitButton"
+								type="submit"
+							>
+								Post Blog
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </main>
 {% endblock content %}
