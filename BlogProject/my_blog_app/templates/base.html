@@ -80,7 +80,7 @@
 			crossorigin="anonymous"
 			referrerpolicy="no-referrer"
 		></script>
-        {%if messages%} {%for message in messages%}
+        {% if messages %} {% for message in messages%}
 		<script>
 			var type = "{{message.tags}}";
 			var message = "{{message}}";
@@ -102,7 +102,7 @@
 					toastr.error("An error occurred");
 			}
 		</script>
-		{%endfor%} {%endif%}
+		{% endfor %} {% endif %}
         <!-- Core theme JS-->
         <script src="{{s}}js/scripts.js"></script>
     </body>
