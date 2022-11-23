@@ -6,7 +6,7 @@ import tzlocal
 
 @register.filter
 def convert_to_localtime(utctime):
-  fmt = '%b. %d, %Y %H:%M %p'
+  fmt='%d %B, %Y %I:%M %p'
   ltz = tzlocal.get_localzone()
   localtz = utctime.replace(tzinfo=pytz.utc).astimezone(ltz)
   return localtz.strftime(fmt)
