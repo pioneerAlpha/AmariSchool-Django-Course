@@ -1,12 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>Dashboard</h1>
-</body>
-</html>
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+{% include 'accounts/status.html' %}
+<br>
+
+<div class="row">
+    <div class="col-md-12">
+        <h5>LAST 5 ORDERS</h5>
+        <hr>
+        <div class="card card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th>Product</th>
+                    <th>Date Ordered</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                    <th>Remove</th>
+                </tr>
+
+                {% for order in last_five_orders %}
+                    <tr>
+                        <td>{{ order.product }}</td>
+                        <td>{{ order.date_created }}</td>
+                        <td>{{ order.status }}</td>
+                        <td><a class="btn btn-sm btn-info" href=""><i class="fa fa-edit"></i> Update</a></td>
+                        <td><a class="btn btn-sm btn-danger" href=""><i class="fa fa-trash"></i> Remove</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <a class="btn btn-primary btn-sm btn-block" href="{% url 'order' %}">All Orders</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
