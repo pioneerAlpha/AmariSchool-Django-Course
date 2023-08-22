@@ -5,14 +5,20 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import *
+from .decorators import *
+from django.forms import inlineformset_factory
 # Create your views here.
+@login_required(login_url='login')
+# @allowed_users(allowed_roles=['admin'])
+@admin_only
 def home(request):
     last_five_orders=Order.objects.all().order_by('-date_created')[:5]
+    customers= Customer.objects.all()
     orders=Order.objects.all()
     total_orders=orders.count()
     delivered=orders.filter(status='Delivered').count()
     pending=orders.filter(status='Pending').count()
-    context={'last_five_orders':last_five_orders,'total_orders':total_orders,'delivered':delivered,'pending':pending}
+    context={'last_five_orders':last_five_orders,'total_orders':total_orders,'delivered':delivered,'pending':pending,'customers':customers}
     return render(request, 'accounts/dashboard.html',context)
 
 def product(request):
@@ -30,7 +36,8 @@ def customer(request):
             form.save()
             
     return render(request, 'accounts/customer.html',context)
-                  
+
+@unauthenticated_user                 
 def register(request):
     form =CreateUserForm()
     if request.method=='POST':
@@ -42,10 +49,12 @@ def register(request):
         form =CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect('login')
 
     context={'form':form}
     return render(request, 'accounts/register.html',context)
 
+@unauthenticated_user
 def loginuser(request):
     if request.method=="POST":
         username=request.POST.get('username')
@@ -84,6 +93,22 @@ def userpage(request):
     return render(request,'accounts/user.html',context)
 
 @login_required(login_url='login')
+def createOrder(request,pk):
+    OrderFormSet= inlineformset_factory(Customer, Order, fields=('product','status'), extra=3)
+    customer=Customer.objects.get(id=pk)
+    # form = OrderForm(initial={'customer':customer})
+    formset = OrderFormSet(queryset=Order.objects.none(),instance=customer)
+    
+    if request.method == 'POST':
+        # form=OrderForm(request.POST)
+        formset= OrderFormSet(request.POST, instance=customer)
+        if formset.is_valid():
+            formset.save()
+            return redirect('/')
+    context={'formset':formset}
+    return render(request, 'accounts/order_form.html',context)
+
+@login_required(login_url='login')
 def updateOrder(request,pk):
     order= Order.objects.get(id=pk)
     
@@ -107,3 +132,17 @@ def deleteOrder(request,pk):
     context={'item':order}
     
     return render(request, 'accounts/delete.html',context)
+
+@login_required(login_url='login')
+def customerDetails(request, pk):
+    customer=Customer.objects.get(id=pk)
+    
+    orders= customer.order_set.all()
+    order_count=orders.count()
+    
+    context={
+        'customer':customer,
+        'orders':orders,
+        'order_count':order_count
+    }
+    return render(request, 'accounts/customer_details.html',context)
